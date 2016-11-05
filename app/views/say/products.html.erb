@@ -1,0 +1,37 @@
+<h2>Listing Products</h2>
+<%products = {"Marker" => 10, "Pencil" => 20, "Scale" => 5} %>
+<% total = 0 %>
+
+
+<table border = "3">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Price</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% products.each do |product,price| %>
+		<tr>
+			<td><%= product %></td>
+			<td><%= price %></td>
+		</tr>
+		<% total += price %>
+	<% end %>
+	</tbody>
+</table>
+<h3>Total = <%= total %> <br>
+<b>Total (using inject) = <%= products.values.inject(:+) %></b>
+
+
+<!--
+<h3>Name   Price</h3>
+<ol>
+	<%products.each do |product,cost| %>
+		<li><%= product%> - <%= cost%></li>
+		<% total += cost %>
+	<% end %>
+</ol>
+<h3>Total = <%= total %>
+-->
+

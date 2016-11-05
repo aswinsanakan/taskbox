@@ -1,0 +1,6 @@
+<h2>PROJECTS</h2>
+<ol>
+	<% @projects.each do |project|%>
+		<li><%= project.name%> ( <%= project.start_date%> )</li>
+	<% end %>
+</ol>

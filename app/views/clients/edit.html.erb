@@ -1,0 +1,24 @@
+<h2>Edit Client details</h2>
+
+<!-- <form action = "clients" method = "post" > -->
+
+<%= form_for @client do |f|%>
+
+<%= f.label :name %><br/>
+<%= f.text_field :name %><br/>
+
+<%= f.label :email %><br/>
+<%= f.email_field :email %><br/>
+
+<%= f.label :mobile %><br/>
+<%= f.text_field :mobile %><br/>
+
+<%= f.label :company %><br/>
+<%= f.text_field :company %><br/>
+
+<%= f.label :website %><br/>
+<%= f.url_field :website %><br/>
+
+<%= f.submit %>
+
+<% end %>

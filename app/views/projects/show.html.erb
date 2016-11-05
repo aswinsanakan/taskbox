@@ -1,0 +1,57 @@
+<h3><%= @project.name %></h3>
+<h3>Client : <%= link_to @project.client.name, client_path(@project.client_id)%></h3>
+
+<%= link_to "edit", edit_project_path(@project.id) %>
+
+<%= link_to "destroy", project_path(@project.id), method: :delete, data: {confirm: "Are you sure?"} %>
+
+<h3>List Tasks</h3>
+
+<h4>Overdue Tasks</h4>
+
+<ul>
+	<% @project.overdue_tasks.each do |task| %>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+	<% end %>
+</ul>
+
+
+<h4>Incomplete Tasks</h4>
+
+<ul>
+	<% @project.incomplete_tasks.each do |task| %>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+	<% end %>
+</ul>
+
+<h4>Completed Tasks</h4>
+
+<ul>
+	<% @project.completed_tasks.each do |task| %>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+	<% end %>
+</ul>
+
+<h3>Add Task</h3>
+
+<%= form_for @task do |f|%>
+	
+	<%= f.hidden_field :project_id, value: @project.id%>
+
+	<%= f.label :title %> </br>
+	<%= f.text_field :title %> </br>
+
+	<%= f.label :due_date %> </br>
+	<%= f.date_select :due_date %> </br>
+
+	<%= f.label :is_completed %> </br>
+	<%= f.check_box :is_completed %> </br>
+
+	<%= f.submit %>
+
+<% end %>
+
+<%= link_to "Back", projects_path %>
+
+<% data = [] %>
+<% @tasks.each do |task|%>

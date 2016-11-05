@@ -1,0 +1,45 @@
+<h3>Client : <%= @client.name %></h3>
+
+<%= link_to "Delete Client", client_path(@client.id), method: :delete , data: {confirm: "Are you sure ?"} %>
+
+<h3>All Projects</h3>
+<ol>
+	<% @client.projects.each do |project|%>
+			<li><%= link_to project.name, project_path(project.id) %> - <%= project.status %> - <%= project.start_date.strftime("%A, %d %B %Y")%></li>
+	<% end %>
+</ol>
+
+<h4>Tasks</h4>
+
+<ul>
+	<% @client.client_tasks.each do |task| %>
+	<li><%= task.title %></li>
+	<% end %>
+</ul>
+
+<h3>Total Projects : <%= @projects.size %></h3>
+
+<h3>New Projects</h3>
+<ul>
+	<% @client.projects.where('status = ?', "new").each do |new|%>
+		<li><%= link_to new.name, project_path(new.id) %></li>
+	<% end %>
+</ul>
+
+<h3>On-going Projects</h3>
+<ul>
+	<% @ongoing_projects.each do |ongoing|%>
+		<li><%= ongoing.name %></li>
+	<% end %>
+</ul>
+
+<h3>Completed Projects</h3>
+<ul>
+	<% @completed_projects.each do |completed|%>
+		<li><%= completed.name %></li>
+	<% end %>
+</ul>
+
+<%= link_to "Back", clients_path %>
+
+
