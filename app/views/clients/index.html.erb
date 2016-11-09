@@ -1,8 +1,11 @@
 <h2>All Clients</h2>
-<p>Total clients : <%= @clients.size %></p>
-<!-- new_client_path will return a string "/clients/new" -->
+<p>Total clients : <%= @clients.size %>
+<%= link_to "Export to excel", clients_export_path(format: "xls")%></p> <br/>
+
 
 <%= link_to "Add Client", new_client_path %>
+<!-- new_client_path will return a string "/clients/new" -->
+
 
 <ol>
 	<% @clients.each do |client|%>

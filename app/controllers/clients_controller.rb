@@ -56,6 +56,14 @@ class ClientsController < ApplicationController
 		redirect_to clients_path, notice: "Destroyed successfully!"
 	end
 
+	def export
+		@clients = current_user.clients
+	end
+
+	def export_each_client
+		@client = current_user.clients.find(params[:client_id])
+		@projects = @client.projects
+	end
 
 	private
 

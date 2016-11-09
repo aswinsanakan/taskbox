@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+
+  get 'clients/export'
+  get 'clients/export_each_client'
+
   devise_for :users
   resources :clients
 

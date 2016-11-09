@@ -1,6 +1,9 @@
 <h3>Client : <%= @client.name %></h3>
 
 <%= link_to "Delete Client", client_path(@client.id), method: :delete , data: {confirm: "Are you sure ?"} %>
+<br/>
+<br/>
+<%= link_to "Export as Excel", clients_export_each_client_path(client_id: @client.id, format: "xls")%>
 
 <h3>All Projects</h3>
 <ol>
