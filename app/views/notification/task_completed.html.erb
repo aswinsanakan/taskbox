@@ -1,0 +1,6 @@
+<p>Hi <%= @task.project.client.name %>, </p>
+	<p>The task - <%= @task.title %> belonging to the project <%= @task.project.name %> has been completed. </p>
+
+<p>Regards,<br/>
+<%= @task.project.user.email %>
+</p>

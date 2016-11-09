@@ -11,7 +11,13 @@
 
 <ul>
 	<% @project.overdue_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+			
+			<%= form_for task do |f|%>
+				<%= f.hidden_field :task_id, value: task.id %>
+				<%= f.submit "Mark as complete"%>
+			<% end %>
+		</li>
 	<% end %>
 </ul>
 
@@ -20,7 +26,13 @@
 
 <ul>
 	<% @project.incomplete_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+			
+			<%= form_for task do |f|%>
+				<%= f.hidden_field :task_id, value: task.id %>
+				<%= f.submit "Mark as complete"%>
+			<% end %>
+		</li>
 	<% end %>
 </ul>
 
@@ -28,7 +40,11 @@
 
 <ul>
 	<% @project.completed_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %></li>
+		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+			
+			<%= link_to "Re-open", tasks_mark_as_incomplete_path %>
+
+		</li>
 	<% end %>
 </ul>
 
@@ -55,7 +71,11 @@
 <%= link_to "Back", projects_path %>
 
 <% data = [] %>
-<% @tasks.each do |task|%>
-	<%%>
-
+<% @tasks.each_with_index do |task,i|%>
+	<% data[i] = [] %>
+	<% data[i].push(task.title) %>
+	<% data[i].push(Date.today - 1.month) %>
+	<% data[i].push(task.due_date) %>
 <% end %>
+
+<%= timeline(data) %>

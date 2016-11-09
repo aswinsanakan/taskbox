@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :projects
 
+  get '/tasks/mark_as_complete'
+  get 'tasks/mark_as_incomplete'
   resources :tasks
   
   get 'sandbox/clients'
