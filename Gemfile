@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'rabl' #ruby api builder language
+#Also, jbuilder, active model serializers, respond_to :json
+
 gem 'faker' 
 
 gem 'paranoia'
