@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :announcements
+
   get 'clients/export'
   get 'clients/export_each_client'
 

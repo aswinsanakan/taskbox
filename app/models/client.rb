@@ -3,6 +3,7 @@ class Client < ActiveRecord::Base
 	acts_as_paranoid 
 	
 	has_many :projects
+	belongs_to :user
 	
 	validates_presence_of :name, :email, :mobile
 	validates_numericality_of :mobile

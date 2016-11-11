@@ -9,10 +9,14 @@ class TasksController < ApplicationController
 
 	def update
 		@task = Task.find(params[:id])
-		if @task.update_attributes(is_completed: true)
+		if @task.update_attributes(task_params)
+			if @task.is_completed == true
 			Notification.task_completed(@task).deliver
 			redirect_to :back, notice: "Successfully marked complete"
-		
+			else 
+			Notification.task_reopened(@task).deliver
+			redirect_to :back, notice: "Successfully reopened!"
+			end
 		end
 	end
 

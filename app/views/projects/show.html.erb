@@ -42,7 +42,11 @@
 	<% @project.completed_tasks.each do |task| %>
 		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
 			
-			<%= link_to "Re-open", tasks_mark_as_incomplete_path %>
+			<%= link_to "Re-open", tasks_mark_as_incomplete_path(task_id: task.id) %>
+			<%= form_for task do |f| %>
+				<%= f.hidden_field :is_completed, value: false %>
+				<%= f.submit "Re-open" %>
+			<% end %>
 
 		</li>
 	<% end %>

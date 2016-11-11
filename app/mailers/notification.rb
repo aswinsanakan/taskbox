@@ -7,13 +7,17 @@ class Notification < ApplicationMailer
   #
   def task_completed(task)
     @task = task
-
     mail to: "#{task.project.client.email}", subject: "#{task.title} has been completed"
   end
 
   def task_reopened(task)
   	@task = task
   	mail to: "#{task.project.client.email}", subject: "#{task.title} has been reopened"
+  end
+
+  def announcement(announcement)
+    @announcement = announcement
+    mail to: "#{announcement.user.clients.pluck(:email).join(',')}", subject: "#{announcement.title}"
   end
 
 end
