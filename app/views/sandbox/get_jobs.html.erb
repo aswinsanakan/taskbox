@@ -1,0 +1,25 @@
+<h3>Search Jobs</h3>
+
+<%= form_tag({url: sandbox_get_jobs_path}, {method: :get}) do %>
+	<%= label_tag :technology %> <br/>
+	<%= text_field_tag :technology %> <br/>
+
+	<%= label_tag :location %> <br/>
+	<%= text_field_tag :location %> <br/>
+
+	<%= submit_tag "Search..." %>
+
+<% end %>
+
+<% if !@response.nil? %>
+	<% response = @response.parsed_response %>
+	<h3>Jobs Found - <%= response["totalResults"] %></h3>
+	<ul>
+		<% response["results"].each do |job| %>
+			<li>
+				<%= job["jobtitle"] %> - <%= job["company"] %> - <%= job["city"] %>
+			</li>
+		<% end %>
+	</ul>
+
+<% end %>

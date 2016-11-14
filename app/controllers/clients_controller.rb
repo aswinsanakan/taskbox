@@ -13,6 +13,7 @@ class ClientsController < ApplicationController
 	def create
 		@client = Client.new(client_params)
 		@client.user_id = current_user.id
+		@client.gender = determine_gender(@client.name)
 		if @client.save #passes validation - clients_path returns "/clients"
 			redirect_to clients_path, notice: "Successfully created client"
 		else #display error messages
@@ -43,6 +44,7 @@ class ClientsController < ApplicationController
 	def update
 		@client = Client.find(params[:id])
 		@client.user_id = current_user.id
+		@client.gender = determine_gender(@client.name)
 		if @client.update_attributes(client_params)
 			redirect_to client_path(@client), notice: "Successfully updated"
 		else
@@ -69,5 +71,10 @@ class ClientsController < ApplicationController
 
 	def client_params
 		params[:client].permit(:name, :mobile,:website,:company, :email)
+	end
+
+	def determine_gender(name)
+		response = HTTParty.get("https://www.gender-api.com/get?name=#{name}&key=pRPLCejozFwCHFbVCR")
+		return response.parsed_response["gender"]
 	end
 end

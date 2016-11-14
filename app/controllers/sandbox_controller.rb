@@ -22,4 +22,13 @@ class SandboxController < ApplicationController
     @products_prices = Product.pluck('price').uniq
     @products_worth = Product.pluck('price').inject(:+)
   end
+
+  def get_jobs
+    if params[:technology]
+      technology = params[:technology]
+      location = params[:location]
+      @response = HTTParty.get("http://api.indeed.com/ads/apisearch?publisher=7277146494571922&q=#{technology}&l=#{location}&co=india&format=json&v=2")
+    end
+  end
+
 end
