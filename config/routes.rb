@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
+  #resources :bookings
+  #resources :rooms
+  
   get 'sandbox/get_jobs'
+  get 'sandbox/restaurants'
+
+  resources :rooms do 
+    resources :bookings 
+  end
   
   namespace :api, defaults: {format: "json"} do
     namespace :v1 do
