@@ -1,21 +1,85 @@
-<h2>All Clients</h2>
-<p>Total clients : <%= @clients.size %>
-<%= link_to "Export to excel", clients_export_path(format: "xls")%></p> <br/>
+<div class="row">
+	<div class="col-md-7">
+		<div class="page-header">
+			<h3>
+				Clients List 
+				<span class="badge"><%= @clients.size %></span>
+				<div class="pull-right">
+					<%# link_to "Add a new client", new_client_path, class: "btn btn-primary" %> 
+					<%= link_to new_client_path, class: "btn btn-primary" do %>
+						<i class="glyphicon glyphicon-plus"></i> Add Client
+					<%end%>
 
+					<%# link_to "Export to excel", clients_export_path(format: "xls"), class: "btn btn-info"%>
+					<%= link_to clients_export_path(format: "xls"), class: "btn btn-info" do %>
+						<i class="glyphicon glyphicon-download-alt"></i> Download
+					<%end%>
+				</div>
+			</h3>			
+		</div>
 
-<%= link_to "Add Client", new_client_path %>
-<!-- new_client_path will return a string "/clients/new" -->
+		<table class="table table-striped" id="clientsTable">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Client</th>
+					<th>Email</th>
+					<th>Company</th>
+					<th>Projects</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @clients.each_with_index do |client, i| %>
+					<tr>
+						<td><%= i+1 %></td>
+						<td><%= client.name %></td>
+						<td><%= client.email %></td>
+						<td><%= client.company %></td>
+						<td><%= client.projects.pluck(:name).join(', ') %></td>
+						<td>
+							<%= link_to client_path(client) do%>
+								<span class="glyphicon glyphicon-eye-open"></span>
+							<%end%>
+							<%= link_to edit_client_path(client) do %>
+								<span class="glyphicon glyphicon-pencil"></span>
+							<%end%>
+							<%= link_to client_path(client), method: :delete, data: {confirm: "Are you sure?"} do %>
+								<span class="glyphicon glyphicon-trash"></span>
+							<%end%>	
+						</td>
+					</tr>
+				<%end%>
+			</tbody>
+		</table>
+	</div>
 
+	<div class="col-md-5">
+		<div class="page-header">
+			<h3 class="text-center">Statistics</h3>
+		</div>
+		<% data = {} %>
+		<% @clients.each do |client| %>
+			<% data[client.name] = client.projects.size %>
+		<% end %>
 
-<ol>
-	<% @clients.each do |client|%>
-		<li><%= client.name %> - <%= link_to "Show", client_path(client.id) %> - <%= link_to "Edit", edit_client_path(client.id) %></li>
-	<% end %>
-</ol>
+		<div>
 
-<% data = {} %>
-<% @clients.each do |client| %>
-	<% data[client.name] = client.projects.size %>
-<% end %>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#pie" role="tab" data-toggle="tab">Pie</a></li>
+		    <li role="presentation"><a href="#bar" role="tab" data-toggle="tab">Bar</a></li>
+		    <li role="presentation"><a href="#column"" role="tab" data-toggle="tab">Column</a></li>
+		  </ul>
 
-<%= bar_chart(data) %>
+		  <!-- Tab panes -->
+		  <div class="tab-content" >
+		    <div role="tabpanel" class="tab-pane active" id="pie"><%= pie_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="bar" ><%= bar_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="column"><%= column_chart(data) %></div>
+		  </div>
+
+		</div>		
+	</div>
+</div>
+

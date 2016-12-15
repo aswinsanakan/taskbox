@@ -1,0 +1,55 @@
+<% if !@project.new_record? %>
+	<script>
+	$(document).ready(function(){
+		$("#dueDate").datepicker({
+			"dateFormat" : "yy-mm-dd",
+			"minDate" : -<%= (Date.today - @project.start_date).to_i %> ,
+			"maxDate" : <%= (@project.end_date - Date.today).to_i %>
+		})
+	})
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$('#calendar').fullCalendar({
+				defaultDate: '<%= Date.today.strftime("%Y-%m-%d") %>',
+				eventLimit: true, // allow "more" link when too many events
+				events: [
+					<% @project.tasks.each do |task| %>
+					{
+						title: "<%= task.title %>",
+						start: "<%= task.due_date.strftime("%Y-%m-%d") %>",
+					},
+					<% end %>
+				]
+			});
+		});
+	</script>
+
+
+<%end%>
+
+
+<script>
+ $(function () {
+     var dateFormat = "yy-mm-dd",
+         from = $("#startDate").datepicker({defaultDate: "+1w", changeMonth: true, numberOfMonths: 1, dateFormat}).on("change", function () {
+             to.datepicker("option", "minDate", getDate(this));
+         }),
+         to = $("#endDate").datepicker({defaultDate: "+1w", changeMonth: true, numberOfMonths: 1, dateFormat}).on("change", function () {
+             from.datepicker("option", "maxDate", getDate(this));
+         });
+
+     function getDate(element) {
+         var date;
+         try {
+             date = $.datepicker.parseDate(dateFormat, element.value);
+         } catch (error) {
+             date = null;
+         }
+
+         return date;
+     }
+   });
+</script>

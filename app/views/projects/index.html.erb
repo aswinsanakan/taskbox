@@ -1,21 +1,103 @@
-<h2>Projects List</h2>
-<p>Total Projects are <b><%= @projects.size%></b></p>
+<div class="row">
+	<div class="col-md-7">
+		<div class="page-header">
+			<h3>Projects List 
+				<span class="badge"><%= @projects.size %></span>
+				<div class="pull-right">
+					
+					<%= link_to new_project_path, class: "btn btn-primary" do %>
+						<i class="glyphicon glyphicon-plus"></i> Add Project
+					<%end%>
+				</div>
+			</h3>
+		</div>
+		<table class="table table-striped" id="projectsTable">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Client</th>
+					<th>Status</th>
+					<th>Start date</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @projects.each_with_index do |project, i| %>
+					<tr>
+						<td><%= i+1 %></td>
+						<td>
+							<%= project.name.capitalize %>
+							<%if !project.tasks.empty? %>
+							<div class="progress">
+							  <div class="progress-bar progress-bar-success" style="width: <%= project.calc_completed %>%">
+							    <span class="sr-only">35% Complete (success)</span>
+							  </div>
+							  <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%= project.calc_incomplete %>%">
+							    <span class="sr-only">20% Complete (warning)</span>
+							  </div>
+							  <div class="progress-bar progress-bar-danger" style="width: <%= project.calc_overdue %>%">
+							    <span class="sr-only">10% Complete (danger)</span>
+							  </div>
+							</div>		
+							<%end%>
+						</td>
+						<td><%= project.client.name %></td>
+						<td><%= project.status %></td>
+						<td><%= project.start_date.strftime("%A, %d %B %Y")%></td>
+						<td>
+							<%= link_to project_path(project) do%>
+								<span class="glyphicon glyphicon-eye-open"></span>
+							<%end%>
+							<%= link_to edit_project_path(project) do %>
+								<span class="glyphicon glyphicon-pencil"></span>
+							<%end%>
+							<%= link_to project_path(project), method: :delete, data: {confirm: "Are you sure?"} do %>
+								<span class="glyphicon glyphicon-trash"></span>
+							<%end%>	
+						</td>
+					</tr>
+				<%end%>
+			</tbody>
+		</table>
+	</div>
 
-<%= link_to "Add a new project", new_project_path %>
+	<div class="col-md-5">
+		<div class="page-header">
+			<h3 class="text-center">Statistics</h3>
+		</div>
 
-<ol>
-	<%@projects.each do |project|%>
-	<li><%= link_to project.name, project_path(project) %> - <%= project.status %> - <%= project.start_date.strftime("%A, %d %B %Y")%></li>
-	<% end %>
-</ol>
+		<% data = {} %>
+		<%
+			data["new"] = current_user.projects.where('status = ?', "new").size
+			data["on-going"] = current_user.projects.where('status = ?', "on-going").size
+			data["completed"] = current_user.projects.where('status = ?', "completed").size
+		%>
 
-<% data = {} %>
-<%
-	data["new"] = current_user.projects.where('status = ?', "new").size
-	data["on-going"] = current_user.projects.where('status = ?', "on-going").size
-	data["completed"] = current_user.projects.where('status = ?', "completed").size
-%>
+		<div>
 
-<%= pie_chart(data) %>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#pie" role="tab" data-toggle="tab">Pie</a></li>
+		    <li role="presentation"><a href="#bar" role="tab" data-toggle="tab">Bar</a></li>
+		    <li role="presentation"><a href="#column"" role="tab" data-toggle="tab">Column</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="pie"><%= pie_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="bar"><%= bar_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="column"><%= column_chart(data) %></div>
+		  </div>
+
+		</div>
+
+		
+		
+	</div>
+</div>
+
+
+
 
 

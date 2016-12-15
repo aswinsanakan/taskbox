@@ -1,39 +1,9 @@
 
 
-<h2>Add Project</h2>
+<div class="page-header">
+	<h2>Add Project</h2>
+</div>
 
-<%= form_for @project do |f|%>
-	<% if @project.errors.any? %>
-		<div class="errors" style="color: red;">
-			<h3>These errors prohibited the form from being saved: </h3>
-			<ul>
-				<% @project.errors.full_messages.each do |msg|%>
-				<li><%= msg%></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-
-	<%= f.label :name %><br/>
-	<%= f.text_field :name %><br/>
-
-	<%= f.label :description %><br/>
-	<%= f.text_area :description %><br/>
-
-	<%= f.label :start_date %><br/>
-	<%= f.date_select :start_date, order: [:day,:month,:year] %><br/>
-
-	<%= f.label :client_id %><br/>
-	<%= f.collection_select :client_id, Client.all, :id, :company, prompt: "Select Client" %><br/>
-
-	<!-- drop downs -->
-	<%# f.label :status %><br/>
-	<%# f.select :status, ["new", "on-going", "completed"], prompt: "Select Status"%>
-
-	<%= f.label :status %><br/>
-	<%= f.radio_button :status, "new" %> New <br/>
-	<%= f.radio_button :status, "on-going" %> On-going <br/>
-	<%= f.radio_button :status, "completed" %> Completed <br/>
-
-	<%= f.submit "Submit" %>
-<% end %>
+<div class="col-md-6">
+	<%= render 'form' %>
+</div>

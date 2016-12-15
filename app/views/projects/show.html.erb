@@ -1,85 +1,165 @@
-<h3><%= @project.name %></h3>
-<h3>Client : <%= link_to @project.client.name, client_path(@project.client_id)%></h3>
 
-<%= link_to "edit", edit_project_path(@project.id) %>
 
-<%= link_to "destroy", project_path(@project.id), method: :delete, data: {confirm: "Are you sure?"} %>
 
-<h3>List Tasks</h3>
+<%= render 'js'%>
 
-<h4>Overdue Tasks</h4>
+<div class="row">
+	<div class="col-md-6">
+		<h3><%= @project.name %></h3>
+		<h3><%= @project.start_date %></h3>
+		<h3>Client : <%= link_to @project.client.name, client_path(@project.client_id)%></h3>
 
-<ul>
-	<% @project.overdue_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
-			
-			<%= form_for task do |f|%>
-				<%= f.hidden_field :task_id, value: task.id %>
-				<%= f.submit "Mark as complete"%>
+		<%= link_to "edit", edit_project_path(@project.id) %>
+
+		<%= link_to "destroy", project_path(@project.id), method: :delete, data: {confirm: "Are you sure?"} %>
+
+
+		<div class="progress">
+		  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= @project.calc_completed %>%;">
+		    <%= @project.calc_completed %> %
+		  </div>
+		</div>
+
+
+		<h3>List Tasks</h3>
+
+		<h4>Overdue Tasks</h4>
+
+		<ul>
+			<% @project.overdue_tasks.each do |task| %>
+				<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+					
+					<%= form_for task do |f|%>
+						<%= f.hidden_field :task_id, value: task.id %>
+						<%= f.submit "Mark as complete"%>
+					<% end %>
+				</li>
 			<% end %>
-		</li>
-	<% end %>
-</ul>
+		</ul>
 
 
-<h4>Incomplete Tasks</h4>
+		<h4>Incomplete Tasks</h4>
 
-<ul>
-	<% @project.incomplete_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
-			
-			<%= form_for task do |f|%>
-				<%= f.hidden_field :task_id, value: task.id %>
-				<%= f.submit "Mark as complete"%>
+		<ul>
+			<% @project.incomplete_tasks.each do |task| %>
+				<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+					
+					<%= form_for task do |f|%>
+						<%= f.hidden_field :task_id, value: task.id %>
+						<%= f.submit "Mark as complete"%>
+					<% end %>
+				</li>
 			<% end %>
-		</li>
-	<% end %>
-</ul>
+		</ul>
 
-<h4>Completed Tasks</h4>
+		<h4>Completed Tasks</h4>
 
-<ul>
-	<% @project.completed_tasks.each do |task| %>
-		<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
-			
-			<%= link_to "Re-open", tasks_mark_as_incomplete_path(task_id: task.id) %>
-			<%= form_for task do |f| %>
-				<%= f.hidden_field :is_completed, value: false %>
-				<%= f.submit "Re-open" %>
+		<ul>
+			<% @project.completed_tasks.each do |task| %>
+				<li><%= task.title %> - <%= task.due_date %> - <%= task.is_completed %>
+					
+					<%= link_to "Re-open", tasks_mark_as_incomplete_path(task_id: task.id) %>
+					<%= form_for task do |f| %>
+						<%= f.hidden_field :is_completed, value: false %>
+						<%= f.submit "Re-open" %>
+					<% end %>
+
+				</li>
 			<% end %>
+		</ul>
 
-		</li>
-	<% end %>
-</ul>
+		<%= link_to "Back", projects_path %>
+	</div>
 
-<h3>Add Task</h3>
+	<div class="col-md-6">
 
-<%= form_for @task do |f|%>
+		<div>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			  Add Task
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Add a task for <%= @project.name %></h4>
+				      </div>
+			      <div class="modal-body">
+			        <h3>Add Task</h3>
+
+					<%= form_for @task do |f|%>
+						
+						<%= f.hidden_field :project_id, value: @project.id%>
+
+						<div class="form-group">
+							<%= f.label :title %> 
+							<%= f.text_field :title, class: "form-control" %> 
+						</div>
+
+
+						<div class="form-group">
+							<%= f.label :due_date %> 
+							<%= f.text_field :due_date, id: "dueDate", class: "form-control" %> 
+						</div>
+
+						<div class="checkbox">
+							<label>
+								<%= f.check_box :is_completed %>
+								<%= f.label :is_completed %> ?
+							</label>
+						</div>
+					</div>
+
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			       
+					    <%= f.submit "Add Task", class: "btn btn-success"%>
+
+					<% end %>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+		</div>
+
+
+		<div>
+
+			<div class="page-header">
+				<h3 class="text-center">Statistics</h3>
+			</div>
+			<% data = {} %>
+				<% data["incomplete_tasks"] = @project.incomplete_tasks.size %>
+				<% data["complete_tasks"] = @project.completed_tasks.size %>
+				<% data["overdue_tasks"] = @project.overdue_tasks.size %>
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+		    <li role="presentation" class="active"><a href="#pie" role="tab" data-toggle="tab">Pie</a></li>
+		    <li role="presentation"><a href="#bar" role="tab" data-toggle="tab">Bar</a></li>
+		    <li role="presentation"><a href="#column"" role="tab" data-toggle="tab">Column</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="pie"><%= pie_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="bar"><%= bar_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="column"><%= column_chart(data) %></div>
+		  </div>
+
+		</div>		
+
+		
+
+	</div>
 	
-	<%= f.hidden_field :project_id, value: @project.id%>
-
-	<%= f.label :title %> </br>
-	<%= f.text_field :title %> </br>
-
-	<%= f.label :due_date %> </br>
-	<%= f.date_select :due_date %> </br>
-
-	<%= f.label :is_completed %> </br>
-	<%= f.check_box :is_completed %> </br>
+	
+</div>
 
 
-	<%= f.submit %>
 
-<% end %>
-
-<%= link_to "Back", projects_path %>
-
-<% data = [] %>
-<% @tasks.each_with_index do |task,i|%>
-	<% data[i] = [] %>
-	<% data[i].push(task.title) %>
-	<% data[i].push(Date.today - 1.month) %>
-	<% data[i].push(task.due_date) %>
-<% end %>
-
-<%= timeline(data) %>
+<div id="calendar"></div>

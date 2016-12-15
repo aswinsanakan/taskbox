@@ -31,6 +31,19 @@ class Project < ActiveRecord::Base
 		self.tasks.where('is_completed = ?', true)
 	end
 
+	def calc_completed
+		return ((self.completed_tasks.size / self.tasks.size.to_f) * 100).round(2)
+	end
+
+	def calc_incomplete
+		return ((self.incomplete_tasks.size / self.tasks.size.to_f) * 100).round(2)
+	end
+
+	def calc_overdue
+		return ((self.overdue_tasks.size / self.tasks.size.to_f) * 100).round(2)
+	end
+
+
 
 	private
 
