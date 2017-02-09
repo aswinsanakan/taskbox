@@ -33,7 +33,7 @@
 				<% @clients.each_with_index do |client, i| %>
 					<tr>
 						<td><%= i+1 %></td>
-						<td><%= client.name %></td>
+						<td><%= link_to client.name,client_path(client) %></td>
 						<td><%= client.email %></td>
 						<td><%= client.company %></td>
 						<td><%= client.projects.pluck(:name).join(', ') %></td>
@@ -74,9 +74,15 @@
 
 		  <!-- Tab panes -->
 		  <div class="tab-content" >
-		    <div role="tabpanel" class="tab-pane active" id="pie"><%= pie_chart(data) %></div>
-		    <div role="tabpanel" class="tab-pane" id="bar" ><%= bar_chart(data) %></div>
-		    <div role="tabpanel" class="tab-pane" id="column"><%= column_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane active" id="pie">
+			<h4 class="text-center">Based on number of projects</h4>
+		    <%= pie_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="bar" >
+			<h4 class="text-center">Based on number of projects</h4>
+		    <%= bar_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="column">
+			<h4 class="text-center">Based on number of projects</h4>
+		    <%= column_chart(data) %></div>
 		  </div>
 
 		</div>		

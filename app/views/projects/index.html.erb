@@ -27,9 +27,9 @@
 					<tr>
 						<td><%= i+1 %></td>
 						<td>
-							<%= project.name.capitalize %>
+							<%= link_to project.name.capitalize, project_path(project) %>
 							<%if !project.tasks.empty? %>
-							<div class="progress">
+							<div class="progress" style="height:5px">
 							  <div class="progress-bar progress-bar-success" style="width: <%= project.calc_completed %>%">
 							    <span class="sr-only">35% Complete (success)</span>
 							  </div>
@@ -85,9 +85,16 @@
 
 		  <!-- Tab panes -->
 		  <div class="tab-content">
-		    <div role="tabpanel" class="tab-pane active" id="pie"><%= pie_chart(data) %></div>
-		    <div role="tabpanel" class="tab-pane" id="bar"><%= bar_chart(data) %></div>
-		    <div role="tabpanel" class="tab-pane" id="column"><%= column_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane active" id="pie">
+				<h4 class="text-center">Based on project status</h4>
+		    	<%= pie_chart(data) %>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="bar">
+				<h4 class="text-center">Based on project status</h4>
+		    <%= bar_chart(data) %></div>
+		    <div role="tabpanel" class="tab-pane" id="column">
+				<h4 class="text-center">Based on project status</h4>
+		    <%= column_chart(data) %></div>
 		  </div>
 
 		</div>
