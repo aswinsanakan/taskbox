@@ -67,6 +67,12 @@ class ClientsController < ApplicationController
 		@projects = @client.projects
 	end
 
+	def validate_client
+		if params[:mobile]
+			@client = Client.find_by_mobile(params[:mobile])
+		end
+	end
+
 	private
 
 	def client_params

@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
+  resources :profiles
   #resources :bookings
   #resources :rooms
   
   get 'sandbox/get_jobs'
   get 'sandbox/restaurants'
+
+  get 'clients/validate_client'
 
   resources :rooms do 
     resources :bookings 

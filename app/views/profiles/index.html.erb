@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<h1>My Profile</h1>
+
+<%if current_user.profile.nil? %>
+  <%= link_to 'Add Profile', new_profile_path, id: "new_profile_link",remote: true %>
+<%else%>
+  <%= current_user.profile.bio %>
+<%end%>

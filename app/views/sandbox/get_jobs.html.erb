@@ -12,6 +12,7 @@
 <% end %>
 
 <% if !@response.nil? %>
+	
 	<% response = @response.parsed_response %>
 	<h3>Jobs Found - <%= response["totalResults"] %></h3>
 	<ul>

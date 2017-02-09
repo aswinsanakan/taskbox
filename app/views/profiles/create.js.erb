@@ -1,0 +1,9 @@
+var formHandle = document.getElementById('new_profile');
+<% if @profile.errors.any? %>
+	errorHandle.innerHTML = "<p><%= @profile.errors.full_messages.join(', ') %><p>";
+<%else%>
+	formHandle.style.display = "none";
+	
+	//formHandle.outerHTML = "<h3><%= @profile.bio %></h3>";
+	formHandle.outerHTML = "<%= j render 'content' %>";
+<%end%>
