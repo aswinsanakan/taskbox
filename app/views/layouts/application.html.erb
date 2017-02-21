@@ -5,23 +5,23 @@
 
   <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application',  'data-turbolinks-track' => true %>
   <%= javascript_include_tag "https://www.google.com/jsapi" %>
 
-	
-	
+
+
 
 	<!-- DataTables jQuery-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
-	
+
 
 	<script src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+
 
 
 	<!-- Latest compiled and minified JavaScript -->
@@ -43,7 +43,7 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="/">TaskBox</a>
+			      <a class="navbar-brand" href="/"> <%= image_tag('taskbox-logo.png', width: "95px", class: "img-responsive") %> </a>
 			    </div>
 
 			    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,12 +52,12 @@
 							<li><a href="/clients">Clients <span class="badge"><%= current_user.clients.size %></span></a>
 							</li>
 
-							<li> 
+							<li>
 								<%= link_to projects_path do%>
-									Projects <span class="badge"><%= current_user.projects.size %></span> 
+									Projects <span class="badge"><%= current_user.projects.size %></span>
 								<%end%>
 							</li>
-			        
+
 			      </ul>
 
 
@@ -74,7 +74,7 @@
 			    </div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
-			 
+
 		<% else %>
 			<nav class="navbar navbar-default">
 			  <div class="container-fluid">
@@ -86,10 +86,10 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="/">TaskBox</a>
+			      <a class="navbar-brand" href="/"><%= image_tag('taskbox-logo.png', width: "95px", class: "img-responsive") %></a>
 			    </div>
 
-			    
+
 			      <ul class="nav navbar-nav navbar-right">
 
 			        <li><%= link_to "Login", new_user_session_path %></li>
@@ -98,12 +98,12 @@
 			          </ul>
 			        </li>
 			      </ul>
-			    
+
 			  </div><!-- /.container-fluid -->
 			</nav>
 		<% end %>
-		
-		
+
+
 		<% if alert %>
 			<div class="alert alert-danger">
 				<%= alert %>
@@ -114,8 +114,8 @@
 			<div class="alert alert-success">
 				<%= notice %>
 			</div>
-		<%end%>		
-		
+		<%end%>
+
 		<%= yield %>
 
 	</div>

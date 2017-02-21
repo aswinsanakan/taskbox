@@ -20,3 +20,20 @@
 	margin-top: "5px";
 	margin-bottom: "5px";
 }
+
+.jumbotron.jumbotron-login {
+    position: relative;
+		padding-top: 100px;
+    background: #fff image-url("taskbox-cover.jpg") center center;
+    color: black ;
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+}
+
+.container .jumbotron {
+    border-radius: 0px;
+}
