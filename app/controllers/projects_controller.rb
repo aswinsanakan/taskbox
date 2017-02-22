@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
 
 	before_action :authenticate_user!
 	def index
-		@projects = current_user.projects.order('start_date DESC')
+		@projects = current_user.projects.order('start_date DESC').includes(:client).includes(:tasks)
 	end
 
 	def new
@@ -12,9 +12,9 @@ class ProjectsController < ApplicationController
 	def create
 		@project = Project.new(project_params)
 		@project.user_id = current_user.id
-		if @project.save 
+		if @project.save
 			redirect_to projects_path, notice: "Successfully created project"
-		else 
+		else
 			render action: "new"
 		end
 	end
@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
 		@project = Project.find(params[:id])
 		@task = Task.new
 		@tasks = @project.tasks
-	
+
 	end
 
 	def edit

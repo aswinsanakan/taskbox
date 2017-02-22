@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
 
 	before_action :authenticate_user!
 	def index
-		@clients = current_user.clients
+		@clients = current_user.clients.includes(:projects)
 	end
 
 	def new
@@ -22,7 +22,7 @@ class ClientsController < ApplicationController
 	end
 
 	def show
-		
+
 		begin
 		@client = current_user.clients.find(params[:id])
 		#@projects = Project.where('client_id = ?', @client.id)
